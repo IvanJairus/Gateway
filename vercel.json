@@ -50,6 +50,11 @@
       "source": "/assets/:path*",
       "destination": "/portfolio/assets/:path*",
       "permanent": true
+    },
+    {
+      "source": "/games",
+      "destination": "/games/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -64,11 +69,23 @@
     {
       "source": "/portfolio/:path*",
       "destination": "https://ij-portofolio.vercel.app/portfolio/:path*"
+    },
+    {
+      "source": "/games/",
+      "destination": "https://ij-games.vercel.app/games/"
+    },
+    {
+      "source": "/games/:path*/",
+      "destination": "https://ij-games.vercel.app/games/:path*/"
+    },
+    {
+      "source": "/games/:path*",
+      "destination": "https://ij-games.vercel.app/games/:path*"
     }
   ],
   "headers": [
     {
-      "source": "/((?!portfolio(?:/|$)).*)",
+      "source": "/((?!portfolio(?:/|$)|games(?:/|$)).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
