@@ -26,10 +26,12 @@ jobs:
         run: node scripts/build.mjs --check
 
       # An origin URL in served markup would leak the per-app host into a link the
-      # visitor can see, and would break the single-domain promise.
+      # visitor can see, and would break the single-domain promise. tests/ is
+      # excluded because a fixture has to carry a real-shaped origin to exercise
+      # the validator's pattern.
       - name: No vercel.app host outside the registry
         run: |
-          hits=$(git grep -nE '\.vercel\.app' -- ':!registry/' ':!vercel.json' ':!README.md' || true)
+          hits=$(git grep -nE '\.vercel\.app' -- ':!registry/' ':!vercel.json' ':!README.md' ':!tests/' || true)
           if [ -n "$hits" ]; then echo "$hits"; exit 1; fi
 
       - name: HTML validation
