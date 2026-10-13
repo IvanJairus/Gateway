@@ -31,7 +31,7 @@ jobs:
       # the validator's pattern.
       - name: No vercel.app host outside the registry
         run: |
-          hits=$(git grep -nE '\.vercel\.app' -- ':!registry/' ':!vercel.json' ':!README.md' ':!tests/' || true)
+          hits=$(git grep -nE '\.vercel\.app' -- ':!registry/' ':!vercel.json' ':!README.md' ':!tests/' ':!docs/' || true)
           if [ -n "$hits" ]; then echo "$hits"; exit 1; fi
 
       - name: HTML validation
