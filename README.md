@@ -95,3 +95,7 @@ project and its metrics land on this dashboard, filterable by path.
 `trailingSlash: true` is set here, so a source without a trailing slash is
 redirected. Legacy redirects are generated in both variants for that reason:
 `/decisions` and `/decisions/` each land on `/portfolio/decisions/` in one hop.
+
+## Licence
+
+This repository uses a dual licence: the code is licensed under the [MIT Licence](LICENSE.md), while the brand identity, content, and custom hairline illustrations are licensed under [CC BY-NC-ND 4.0](LICENSE.md). See [LICENSE.md](LICENSE.md) for details.
