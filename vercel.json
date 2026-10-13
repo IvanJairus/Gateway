@@ -58,6 +58,10 @@
       "destination": "https://ij-portofolio.vercel.app/portfolio/"
     },
     {
+      "source": "/portfolio/:path*/",
+      "destination": "https://ij-portofolio.vercel.app/portfolio/:path*/"
+    },
+    {
       "source": "/portfolio/:path*",
       "destination": "https://ij-portofolio.vercel.app/portfolio/:path*"
     }

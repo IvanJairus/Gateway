@@ -91,6 +91,7 @@ export function redirectPlan(app) {
 export function rewritePlan(app) {
   return [
     { source: `/${app.slug}/`, destination: `${app.origin}/${app.slug}/` },
+    { source: `/${app.slug}/:path*/`, destination: `${app.origin}/${app.slug}/:path*/` },
     { source: `/${app.slug}/:path*`, destination: `${app.origin}/${app.slug}/:path*` },
   ];
 }

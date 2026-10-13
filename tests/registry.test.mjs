@@ -67,7 +67,7 @@ test("a hidden app emits a rewrite but no card", () => {
   const ctx = ctxOf(reg);
   assert.equal(ctx.cards.length, 0);
   assert.equal(ctx.routed.length, 1);
-  assert.equal(JSON.parse(renderVercel(ctx)).rewrites.length, 2);
+  assert.equal(JSON.parse(renderVercel(ctx)).rewrites.length, 3);
 });
 
 test("sitemap true is only allowed for live apps", () => {
