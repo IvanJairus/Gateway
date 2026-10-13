@@ -13,6 +13,13 @@
       .wall-front { fill: #f3ede2; stroke: #1c1917; stroke-width: 1.15; stroke-linejoin: round; }
       .pawn-dark { fill: #1c1917; stroke: #1c1917; stroke-width: 1.15; stroke-linejoin: round; }
       .pawn-light { fill: #ffffff; stroke: #1c1917; stroke-width: 1.15; stroke-linejoin: round; }
+
+      @keyframes dashflow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -22; } }
+      .anim-trail { animation: dashflow 3s linear infinite; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .anim-trail { animation: none !important; }
+      }
     </style>
   </defs>
   <path d="M66.0 100.0L160.0 154.3L160.0 162.2L66.0 107.9Z" class="slab-base-l"/>
@@ -109,7 +116,7 @@
   <path d="M136.9 79.9L160.9 93.8L159.1 94.9L135.1 81.0Z" class="wall-top"/>
   <ellipse cx="160.0" cy="86.1" rx="4.0" ry="2.3" stroke="#b42318" stroke-width="0.9" stroke-dasharray="2 2" fill="none"/>
   <circle cx="160.0" cy="86.1" r="1.1" fill="#b42318" fill-opacity="0.5"/>
-  <path d="M160.0 86.1L136.0 100.0" class="trail"/>
+  <path d="M160.0 86.1L136.0 100.0" class="trail anim-trail"/>
   <circle cx="148.0" cy="93.1" r="1.0" fill="#b42318"/>
   <path d="M131.6 100.0L131.6 92.1A4.4 2.5 0 0 0 140.4 92.1L140.4 100.0Z" class="pawn-dark"/>
   <ellipse cx="136.0" cy="92.1" rx="4.4" ry="2.5" fill="#2d2926" stroke="#1c1917" stroke-width="1.15"/>

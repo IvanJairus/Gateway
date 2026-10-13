@@ -42,7 +42,21 @@
   background: var(--bg-3);
   border-bottom: 1px solid var(--line);
 }
-.art img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover .art img,
+  .tile:focus-visible .art img {
+    transform: translateY(-2px) scale(1.02);
+  }
+}
 
 .cap { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
 .cap .t { font-size: 19px; letter-spacing: -0.015em; }
