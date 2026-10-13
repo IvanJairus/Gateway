@@ -1,0 +1,4 @@
+Sitemap: https://www.ivanjairus.xyz/sitemap.xml
+
+User-agent: *
+Allow: /

@@ -1,0 +1,65 @@
+{
+  "$schema": "./apps.schema.json",
+  "site": {
+    "origin": "https://www.ivanjairus.xyz",
+    "title": "Ivan Jairus",
+    "monogram": "IJ",
+    "hero": "Two ways in.",
+    "sub": "One holds the work. The other holds a game I am still building."
+  },
+  "categoryMeta": {
+    "portfolio": {
+      "title": "Portfolio",
+      "order": 10
+    },
+    "games": {
+      "title": "Games",
+      "order": 20
+    }
+  },
+  "apps": [
+    {
+      "slug": "portfolio",
+      "origin": "https://ij-portfolio.vercel.app",
+      "framework": "static",
+      "status": "live",
+      "sitemap": true,
+      "legacyRedirects": [
+        "/decisions/",
+        "/reports/",
+        "/pipelines/",
+        "/diagrams/",
+        "/assets/:path*"
+      ],
+      "cards": [
+        {
+          "id": "portfolio",
+          "path": "",
+          "title": "Portfolio",
+          "summary": "DevSecOps work: how the pipelines were designed, the decisions taken and what they cost, and what runs every week.",
+          "category": "portfolio",
+          "icon": "/static/img/apps/portfolio.svg",
+          "order": 10
+        }
+      ]
+    },
+    {
+      "slug": "games",
+      "origin": "https://ij-games.vercel.app",
+      "framework": "vite",
+      "status": "draft",
+      "sitemap": false,
+      "cards": [
+        {
+          "id": "games",
+          "path": "",
+          "title": "Games",
+          "summary": "WallGo, a turn-based 7x7 board: move, then build a wall. Still being built, not playable yet.",
+          "category": "games",
+          "icon": "/static/img/apps/games.svg",
+          "order": 10
+        }
+      ]
+    }
+  ]
+}
