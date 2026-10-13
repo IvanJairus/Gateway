@@ -1,0 +1,25 @@
+# security.txt for https://www.ivanjairus.xyz/
+# Conforms to RFC 9116. Fields are limited to what is true for this site.
+#
+# Absent on purpose:
+#   Canonical        - this file is not digitally signed, so a canonical URL
+#                      would authenticate nothing.
+#   Acknowledgments  - no credits list exists yet; an empty page is worse than
+#                      no field.
+#   Policy           - the full policy is SECURITY.md in the portfolio
+#                      repository; this file carries only the reporting
+#                      essentials.
+#   Encryption       - no key has been published yet. Send an outline first and
+#                      ask for a method if the finding is sensitive.
+#   AI-robots.txt    - not a field defined by RFC 9116, and no such file is
+#                      served here, so a reference would resolve to a 404.
+#
+# The gateway itself is static: no accounts, no forms, no third-party origin
+# requests, and a Content-Security-Policy of default-src 'self'. It does load
+# Vercel's own same-origin analytics script, and it proxies traffic to the apps
+# listed in registry/apps.json, whose own headers apply on their paths.
+# It holds no user data, so it cannot leak any.
+
+Contact: mailto:Filemonivanjairus@gmail.com
+Expires: 2027-10-07T23:59:59Z
+Preferred-Languages: en, id

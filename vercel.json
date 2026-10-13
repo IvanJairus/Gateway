@@ -1,0 +1,109 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/portfolio",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/decisions/",
+      "destination": "/portfolio/decisions/",
+      "permanent": true
+    },
+    {
+      "source": "/decisions",
+      "destination": "/portfolio/decisions/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/",
+      "destination": "/portfolio/reports/",
+      "permanent": true
+    },
+    {
+      "source": "/reports",
+      "destination": "/portfolio/reports/",
+      "permanent": true
+    },
+    {
+      "source": "/pipelines/",
+      "destination": "/portfolio/pipelines/",
+      "permanent": true
+    },
+    {
+      "source": "/pipelines",
+      "destination": "/portfolio/pipelines/",
+      "permanent": true
+    },
+    {
+      "source": "/diagrams/",
+      "destination": "/portfolio/diagrams/",
+      "permanent": true
+    },
+    {
+      "source": "/diagrams",
+      "destination": "/portfolio/diagrams/",
+      "permanent": true
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/portfolio/assets/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/portfolio/",
+      "destination": "https://ij-portfolio.vercel.app/portfolio/"
+    },
+    {
+      "source": "/portfolio/:path*",
+      "destination": "https://ij-portfolio.vercel.app/portfolio/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/((?!portfolio(?:/|$)).*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://vitals.vercel-insights.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), hid=(), serial=(), accelerometer=(), gyroscope=(), magnetometer=(), clipboard-write=(self)"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

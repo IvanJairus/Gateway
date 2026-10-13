@@ -1,0 +1,61 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  registry:
+    name: Registry, generator and markup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 20
+
+      - name: Registry tests
+        run: node --test tests/*.test.mjs
+
+      - name: Generated files match the registry
+        run: node scripts/build.mjs --check
+
+      # An origin URL in served markup would leak the per-app host into a link the
+      # visitor can see, and would break the single-domain promise.
+      - name: No vercel.app host outside the registry
+        run: |
+          hits=$(git grep -nE '\.vercel\.app' -- ':!registry/' ':!vercel.json' ':!README.md' || true)
+          if [ -n "$hits" ]; then echo "$hits"; exit 1; fi
+
+      - name: HTML validation
+        run: npx --yes html-validate@8 index.html 404.html categories/*/index.html
+
+      - name: Security.txt is present where RFC 9116 says it must be
+        run: test -s .well-known/security.txt
+
+  live:
+    name: Every live app answers on the domain
+    if: github.event_name == 'schedule' && vars.GATEWAY_LIVE == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Probe each app through the gateway and through its own origin
+        run: |
+          node --input-type=module -e '
+          import { readFileSync } from "node:fs";
+          const reg = JSON.parse(readFileSync("registry/apps.json", "utf8"));
+          let bad = 0;
+          for (const app of reg.apps.filter((a) => a.status === "live")) {
+            const onDomain = await fetch(`${reg.site.origin}/${app.slug}/`, { redirect: "manual" });
+            const onOrigin = await fetch(`${app.origin}/${app.slug}/`, { redirect: "manual" });
+            const ok = onDomain.status === 200 && onOrigin.status !== 401;
+            if (!ok) bad = 1;
+            console.log(`${ok ? "ok  " : "FAIL"} ${app.slug}: domain=${onDomain.status} origin=${onOrigin.status}`);
+          }
+          process.exit(bad);
+          '

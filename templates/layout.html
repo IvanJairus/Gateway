@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta http-equiv="Content-Security-Policy" content="{{csp}}">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="{{canonical}}">
+  <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{site_title}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/cards.css">
+</head>
+<body>
+  <a class="skip mono" href="#main">Skip to content</a>
+  <header class="site-head">
+    <div class="wrap head-row">
+      <span class="mark mono" aria-hidden="true">{{monogram}}</span>
+      <span class="brand mono">{{site_origin_label}}</span>
+      <span class="where mono">gateway</span>
+    </div>
+  </header>
+  <main id="main">
+{{body}}
+  </main>
+  <footer class="site-foot">
+    <div class="wrap foot-row">
+      <span class="mono">built from registry/apps.json</span>
+      <span class="mono">status recorded by the daily CI job</span>
+      <span class="mono">no framework, no CDN</span>
+    </div>
+  </footer>
+</body>
+</html>
