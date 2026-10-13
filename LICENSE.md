@@ -4,8 +4,10 @@ This repository contains two distinct classes of material with different licence
 
 1. **The Code** (`scripts/*`, `templates/*`, `static/css/*`, `tests/*`, `registry/vercel.base.json`, `.github/*`):
    licensed under the **MIT Licence**.
-2. **The Content, Identity & Artwork** (Personal identity, domain references, registry prose, and custom isometric hairline illustrations in `static/img/apps/*`):
+2. **The Content & Brand Assets** (Personal identity, domain references, registry prose, and custom isometric hairline illustrations in `static/img/apps/*`):
    licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Licence (CC BY-NC-ND 4.0)**.
+3. **Design & Drafting Inspiration**:
+   The isometric hairline drafting aesthetic for illustrations in `static/img/apps/*` is inspired by the open-source design principles of [hairline](https://github.com/lucasmarkes/hairline) by Lucas Marques (MIT License).
 
 ---
 
@@ -49,3 +51,15 @@ You are free to copy and redistribute the material in any medium or format, unde
 - **NoDerivatives** — If you remix, transform, or build upon the material, you may not distribute the modified material.
 
 To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+---
+
+## 3. Third-Party Attribution: hairline
+
+The drafting aesthetic, stroke weight conventions, and isometric axonometric projection techniques used in the custom SVG illustrations were inspired by [hairline](https://github.com/lucasmarkes/hairline), licensed under the MIT License by Lucas Marques:
+
+Copyright (c) 2026 Lucas Marques
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
