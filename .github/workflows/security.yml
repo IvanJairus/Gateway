@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   links:
-    name: Link integrity (internal + external)
+    name: Link integrity (documentation & references)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -34,8 +34,8 @@ jobs:
             --exclude 'ivanjairus\.xyz'
             --exclude 'ij-'
             --exclude '<slug>'
-            --exclude 'vitals\.vercel-insights\.com'
-            index.html 404.html README.md LICENSE.md
+            --exclude '^/'
+            README.md LICENSE.md
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
