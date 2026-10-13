@@ -55,11 +55,11 @@
   "rewrites": [
     {
       "source": "/portfolio/",
-      "destination": "https://ij-portfolio.vercel.app/portfolio/"
+      "destination": "https://ij-portofolio.vercel.app/portfolio/"
     },
     {
       "source": "/portfolio/:path*",
-      "destination": "https://ij-portfolio.vercel.app/portfolio/:path*"
+      "destination": "https://ij-portofolio.vercel.app/portfolio/:path*"
     }
   ],
   "headers": [

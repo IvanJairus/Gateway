@@ -20,7 +20,7 @@
   "apps": [
     {
       "slug": "portfolio",
-      "origin": "https://ij-portfolio.vercel.app",
+      "origin": "https://ij-portofolio.vercel.app",
       "framework": "static",
       "status": "live",
       "sitemap": true,
