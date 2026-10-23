@@ -55,6 +55,11 @@
       "source": "/games",
       "destination": "/games/",
       "permanent": true
+    },
+    {
+      "source": "/mabar",
+      "destination": "/mabar/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -81,11 +86,23 @@
     {
       "source": "/games/:path*",
       "destination": "https://ij-games.vercel.app/games/:path*"
+    },
+    {
+      "source": "/mabar/",
+      "destination": "https://ij-mabar.vercel.app/mabar/"
+    },
+    {
+      "source": "/mabar/:path*/",
+      "destination": "https://ij-mabar.vercel.app/mabar/:path*/"
+    },
+    {
+      "source": "/mabar/:path*",
+      "destination": "https://ij-mabar.vercel.app/mabar/:path*"
     }
   ],
   "headers": [
     {
-      "source": "/((?!portfolio(?:/|$)|games(?:/|$)).*)",
+      "source": "/((?!portfolio(?:/|$)|games(?:/|$)|mabar(?:/|$)).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",

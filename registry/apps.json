@@ -60,6 +60,24 @@
           "order": 10
         }
       ]
+    },
+    {
+      "slug": "mabar",
+      "origin": "https://ij-mabar.vercel.app",
+      "framework": "vite",
+      "status": "live",
+      "sitemap": true,
+      "cards": [
+        {
+          "id": "mabar",
+          "path": "",
+          "title": "Mabar",
+          "summary": "15 party games for 2–6 players on one phone: charades, buzzer rounds, color hunts, and more.",
+          "category": "games",
+          "icon": "/static/img/apps/mabar.svg",
+          "order": 20
+        }
+      ]
     }
   ]
 }

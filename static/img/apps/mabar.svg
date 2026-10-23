@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="Mabar party games illustration">
+  <rect width="320" height="180" fill="#f4ebdd"/>
+  <g stroke="#1b1a17" stroke-width="1" stroke-opacity="0.08">
+    <path d="M40 0v180M80 0v180M120 0v180M160 0v180M200 0v180M240 0v180M280 0v180"/>
+    <path d="M0 45h320M0 90h320M0 135h320"/>
+  </g>
+  <rect x="26" y="34" width="112" height="112" rx="22" fill="#1b1a17"/>
+  <path d="M52 116V62h14l16 24 16-24h14v54H98V82L82 106 66 82v34z" fill="#f4ebdd"/>
+  <circle cx="126" cy="46" r="9" fill="#e8452c"/>
+  <rect x="178" y="42" width="50" height="50" rx="12" fill="#e8452c"/>
+  <path d="M203 54l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fffdf8"/>
+  <rect x="240" y="42" width="24" height="24" rx="6" fill="#2e5c8a"/>
+  <rect x="270" y="42" width="24" height="24" rx="6" fill="#3e7c4a"/>
+  <rect x="240" y="72" width="24" height="24" rx="6" fill="#e9c46a"/>
+  <rect x="270" y="72" width="24" height="24" rx="6" fill="#e07a9a"/>
+  <rect x="178" y="118" width="116" height="8" rx="4" fill="#1b1a17" fill-opacity="0.18"/>
+  <rect x="178" y="132" width="78" height="8" rx="4" fill="#1b1a17" fill-opacity="0.1"/>
+</svg>
