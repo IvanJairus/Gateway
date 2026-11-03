@@ -26,6 +26,7 @@ const STATUS_WORD = { live: "live · 200", draft: "draft · not built yet" };
 
 export function renderCard(root, card) {
   const live = card.appStatus === "live";
+  const external = Boolean(card.external);
   return fill(tpl(root, "card.html"), {
     tile_class: live ? "" : " draft",
     href: esc(card.href),
@@ -33,8 +34,10 @@ export function renderCard(root, card) {
     icon: esc(card.icon),
     title: esc(card.title),
     summary: esc(card.summary),
-    path_label: esc(`/${card.appSlug}/${card.path}`),
-    open: live ? '<span class="go mono">open →</span>' : "",
+    /* A gateway path and a foreign host are different promises, so the label
+       shows whichever the tile actually is, and the arrow says it leaves. */
+    path_label: esc(external ? card.external.replace(/^https:\/\//, "").replace(/\/$/, "") : `/${card.appSlug}/${card.path}`),
+    open: live ? `<span class="go mono">open ${external ? "↗" : "→"}</span>` : "",
     glyph: live ? "solid" : "hollow",
     status_word: esc(STATUS_WORD[card.appStatus]),
   }).trimEnd();
@@ -152,7 +155,7 @@ export function renderVercel(ctx) {
   const redirects = [];
   const rewrites = [];
   for (const app of ctx.registry.apps) {
-    if (app.status === "draft") continue;
+    if (app.status === "draft" || app.external) continue;
     redirects.push(...redirectPlan(app).map((r) => ({ ...r, permanent: true })));
     rewrites.push(...rewritePlan(app));
   }
@@ -168,6 +171,7 @@ export function renderVercel(ctx) {
 export function renderSitemapGateway(ctx) {
   const urls = ["/", ...ctx.orderedCategories.map((c) => `/categories/${c.id}/`)];
   for (const app of ctx.registry.apps) {
+    if (app.external) continue;
     if (app.status === "live" && !app.sitemap) urls.push(`/${app.slug}/`);
   }
   return urlset(ctx.registry.site.origin, urls);

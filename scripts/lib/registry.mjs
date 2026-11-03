@@ -38,7 +38,10 @@ export function derive(registry) {
       ...c,
       appSlug: a.slug,
       appStatus: a.status,
-      href: `/${a.slug}/${c.path}`,
+      external: a.external || "",
+      /* An external app is served by another host, so the tile carries that host
+         and the gateway never claims the path its slug would have made. */
+      href: a.external || `/${a.slug}/${c.path}`,
     })));
 
   const categories = new Map();
@@ -61,7 +64,7 @@ export function derive(registry) {
     }))
     .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 
-  const routed = apps.filter((a) => a.status === "live" || a.status === "hidden");
+  const routed = apps.filter((a) => !a.external && (a.status === "live" || a.status === "hidden"));
 
   return { cards, categories, orderedCategories, reserved, owners, routed };
 }

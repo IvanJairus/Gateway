@@ -4,6 +4,8 @@ import { RESERVED } from "./registry.mjs";
 
 const SLUG = /^[a-z0-9-]+$/;
 const ORIGIN = /^https:\/\/ij-[a-z0-9-]+\.vercel\.app$/;
+const EXTERNAL = /^https:\/\/[a-z0-9]([a-z0-9.-]*[a-z0-9])?\/$/;
+const VERCEL_HOST = /\.vercel\.app$/;
 const LEGACY = /^\/[A-Za-z0-9._/:*()-]+$/;
 const ICON = /^\/static\/img\/apps\/[a-z0-9-]+\.svg$/;
 const CARD_PATH = /^([a-z0-9-]+\/)*$/;
@@ -20,6 +22,7 @@ export function validate({ root, registry, cards, owners, orderedCategories }) {
 
   const seenSlug = new Set();
   const seenCardId = new Set();
+  const siteHost = String(registry.site.origin || "").replace(/^https:\/\//, "").toLowerCase();
 
   for (const app of registry.apps) {
     const at = `app "${app.slug || "??"}"`;
@@ -32,7 +35,25 @@ export function validate({ root, registry, cards, owners, orderedCategories }) {
     const claimed = owners.get(app.slug);
     if (claimed && claimed !== app.slug) err(`${at}: slug is already claimed as a legacy path by app "${claimed}"`);
 
-    if (!ORIGIN.test(app.origin || "")) err(`${at}: origin must match ${ORIGIN}`);
+    /* An external app is linked, not proxied: it owns no gateway path, so the
+       rules that keep a proxy honest are replaced by rules that keep the link
+       honest. A vercel.app host here would put a per-app origin in served markup. */
+    if (app.external) {
+      const host = app.external.replace(/^https:\/\//, "").replace(/\/$/, "").toLowerCase();
+      if (!EXTERNAL.test(app.external)) {
+        err(`${at}: external must be an https origin with a trailing slash and no path, got "${app.external}"`);
+      } else if (VERCEL_HOST.test(host)) {
+        err(`${at}: an external app must name its own domain, not a vercel.app host`);
+      } else if (host === siteHost) {
+        err(`${at}: an external app cannot point back at the gateway itself`);
+      }
+      if (app.origin) err(`${at}: an external app must not also declare an origin`);
+      if (app.status !== "live") err(`${at}: an external app is only useful as a live card, not "${app.status}"`);
+      if (app.sitemap) err(`${at}: an external app cannot publish a sitemap through the gateway`);
+      if ((app.legacyRedirects || []).length) err(`${at}: an external app claims no gateway paths`);
+    } else if (!ORIGIN.test(app.origin || "")) {
+      err(`${at}: origin must match ${ORIGIN}`);
+    }
     if (!STATUSES.includes(app.status)) err(`${at}: status must be one of ${STATUSES.join(", ")}`);
     if (typeof app.sitemap !== "boolean") err(`${at}: sitemap must be true or false`);
     if (app.sitemap && app.status !== "live") err(`${at}: sitemap true requires status live`);

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="Split Bill receipt divided between two people">
+  <rect width="320" height="180" fill="#f4ebdd"/>
+  <g stroke="#1b1a17" stroke-width="1" stroke-opacity="0.08">
+    <path d="M40 0v180M80 0v180M120 0v180M160 0v180M200 0v180M240 0v180M280 0v180"/>
+    <path d="M0 45h320M0 90h320M0 135h320"/>
+  </g>
+  <path d="M112 22h96v128l-16-8-16 8-16-8-16 8-16-8-16 8z" fill="#fffdf8" stroke="#1b1a17" stroke-width="1.5"/>
+  <rect x="126" y="36" width="68" height="6" rx="3" fill="#1b1a17" fill-opacity="0.45"/>
+  <g fill="#1b1a17" fill-opacity="0.16">
+    <rect x="126" y="56" width="24" height="5" rx="2.5"/>
+    <rect x="170" y="56" width="24" height="5" rx="2.5"/>
+    <rect x="126" y="70" width="24" height="5" rx="2.5"/>
+    <rect x="170" y="70" width="24" height="5" rx="2.5"/>
+    <rect x="126" y="84" width="24" height="5" rx="2.5"/>
+    <rect x="170" y="84" width="24" height="5" rx="2.5"/>
+  </g>
+  <g fill="#1b1a17" fill-opacity="0.5">
+    <rect x="126" y="104" width="24" height="6" rx="3"/>
+    <rect x="170" y="104" width="24" height="6" rx="3"/>
+  </g>
+  <path d="M160 30v90" stroke="#e8452c" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <g fill="#1b1a17">
+    <circle cx="58" cy="76" r="12"/>
+    <path d="M40 110a18 18 0 0 1 36 0z"/>
+  </g>
+  <g fill="#e8452c">
+    <circle cx="262" cy="76" r="12"/>
+    <path d="M244 110a18 18 0 0 1 36 0z"/>
+  </g>
+  <g stroke="#1b1a17" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M78 96h22M220 96h22"/>
+  </g>
+  <g fill="#1b1a17" fill-opacity="0.45">
+    <path d="M104 91l7 5-7 5z"/>
+    <path d="M216 91l-7 5 7 5z"/>
+  </g>
+  <rect x="40" y="128" width="36" height="6" rx="3" fill="#1b1a17" fill-opacity="0.14"/>
+  <rect x="244" y="128" width="36" height="6" rx="3" fill="#1b1a17" fill-opacity="0.14"/>
+</svg>

@@ -36,11 +36,16 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["slug", "origin", "framework", "status", "sitemap", "cards"],
+        "required": ["slug", "framework", "status", "sitemap", "cards"],
         "additionalProperties": false,
         "properties": {
           "slug": { "$ref": "#/$defs/slug" },
           "origin": { "type": "string", "pattern": "^https://ij-[a-z0-9-]+\\.vercel\\.app$" },
+          "external": {
+            "description": "Set instead of origin to link the card at an app served on its own domain. The gateway then rewrites nothing, publishes no sitemap, and the app must be live.",
+            "type": "string",
+            "pattern": "^https://[a-z0-9]([a-z0-9.-]*[a-z0-9])?/$"
+          },
           "framework": { "enum": ["static", "vite"] },
           "status": { "$ref": "#/$defs/status" },
           "sitemap": { "type": "boolean" },
@@ -66,7 +71,20 @@
               }
             }
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": { "required": ["external"] },
+            "then": {
+              "properties": { "status": { "const": "live" }, "sitemap": { "const": false } },
+              "not": { "required": ["origin", "legacyRedirects"] }
+            }
+          },
+          {
+            "if": { "not": { "required": ["external"] } },
+            "then": { "required": ["origin"] }
+          }
+        ]
       }
     }
   },

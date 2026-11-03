@@ -53,8 +53,16 @@ jobs:
           const reg = JSON.parse(readFileSync("registry/apps.json", "utf8"));
           let bad = 0;
           for (const app of reg.apps.filter((a) => a.status === "live")) {
+            /* An external app is linked rather than proxied, so it has no gateway
+               path to probe and its own 200 is the only claim the card makes. */
+            const onOrigin = await fetch(app.external || `${app.origin}/${app.slug}/`, { redirect: "manual" });
+            if (app.external) {
+              const ok = onOrigin.status === 200;
+              if (!ok) bad = 1;
+              console.log(`${ok ? "ok  " : "FAIL"} ${app.slug}: external=${onOrigin.status}`);
+              continue;
+            }
             const onDomain = await fetch(`${reg.site.origin}/${app.slug}/`, { redirect: "manual" });
-            const onOrigin = await fetch(`${app.origin}/${app.slug}/`, { redirect: "manual" });
             const ok = onDomain.status === 200 && onOrigin.status !== 401;
             if (!ok) bad = 1;
             console.log(`${ok ? "ok  " : "FAIL"} ${app.slug}: domain=${onDomain.status} origin=${onOrigin.status}`);

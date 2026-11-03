@@ -9,6 +9,11 @@ to the project that serves it, so every app lives under one domain at
 | `/`, `/categories/<id>/`, `/static/` | this repository |
 | `/portfolio/` | `ij-portfolio` Vercel project |
 | `/games/` | `ij-games` Vercel project |
+| `/mabar/` | `ij-mabar` Vercel project |
+
+`/splitbill/` is not a path. The Split Bill card links straight to
+`https://splitbill.ivanjairus.xyz/`, which is how an `external` app differs from
+a proxied one.
 
 There is no framework, no build step on the host, and no runtime dependency. The
 pages you are about to read are generated here and committed.
@@ -24,7 +29,9 @@ pages you are about to read are generated here and committed.
    Protection would answer 401.
 3. Add one object to `registry/apps.json`, plus one icon at
    `static/img/apps/<card id>.svg`. A new category needs no setup: it is just a
-   value of `cards[].category`.
+   value of `cards[].category`. An app that keeps its own domain skips steps 1
+   and 2 and sets `external` instead of `origin`, as described in
+   [An app that is not proxied](#an-app-that-is-not-proxied).
 4. Run `node scripts/build.mjs`, commit every file it rewrote, push. CI runs the
    same command with `--check` and fails if the committed output is stale.
 5. Open `https://www.ivanjairus.xyz/<slug>/` and find the card on the landing.
@@ -61,13 +68,25 @@ silently break a policy the portfolio tuned on its own.
 say so, and the tile carries a dashed border, no open arrow, and the words
 `draft · not built yet`. A tile that lies about existing is worse than no tile.
 
+### An app that is not proxied
+
+An app already published on its own domain can be listed without being
+rewritten: set `external` instead of `origin`. The card links straight at that
+URL and the tile label shows the host rather than a path, with `↗` in place of
+the open arrow so the exit is visible before the click. The gateway emits no
+redirect, no rewrite and no sitemap entry for it, so `status` has to be `live`
+and `sitemap` has to be `false`. A `vercel.app` host is rejected here: it would
+put a per-app origin into served markup, which is what the CI guard keeps out.
+
 ### Landing layout
 
-Tiles come from the registry in category order, then card order. The grid is one
-row of at most three, and the last row divides the leftover width, so two cards
-left over means two half-width cards. The category is a corner tag rather than a
-section heading, because with two apps a section would give one heading to one
-card.
+Tiles on the landing follow `apps.json`: app order, then card order inside each
+app. A category page sorts its tiles by `order` instead. The grid is one row of
+at most two, and a leftover row shares out the spare width but stops at half the
+sheet, the widest tile whose 16/9 art still reaches its height cap. Stretching
+past that letterboxes the illustration instead of showing more of it. The
+category is a corner tag rather than a section heading, because with two apps a
+section would give one heading to one card.
 
 ## Checks
 

@@ -3,13 +3,20 @@
   flex-wrap: wrap;
   gap: 18px;
   margin-top: 18px;
+  /* A tile is half the widest sheet minus the gap, and the art band is 16/9 of
+     exactly that, so no tile can outgrow the illustration it is showing. Both
+     come from --wrap rather than a literal, so widening the page moves the two
+     together. */
+  --tile-max: calc((var(--wrap) - (2 * var(--pad)) - 18px) / 2);
+  --art-max: calc(var(--tile-max) * 9 / 16);
 }
 
-/* One third minus the gaps gives at most three per row; flex-basis is a request,
+/* Half the row minus the gap gives at most two per row; flex-basis is a request,
    not a promise, so min-width decides the real column count and flex-grow hands
-   the leftover width to whatever is left over on the final row. */
+   the leftover width to whatever is left over on the final row, up to --tile-max. */
 .tile {
-  flex: 1 1 calc((100% - (2 * 18px)) / 3);
+  flex: 1 1 calc((100% - 18px) / 2);
+  max-width: var(--tile-max);
   min-width: 250px;
   position: relative;
   display: flex;
@@ -38,7 +45,7 @@
 .art {
   position: relative;
   aspect-ratio: 16 / 9;
-  max-height: 232px;
+  max-height: var(--art-max);
   background: var(--bg-3);
   border-bottom: 1px solid var(--line);
 }

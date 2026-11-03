@@ -5,10 +5,11 @@ import { fileURLToPath } from "node:url";
 
 import { derive, redirectPlan, RESERVED } from "../scripts/lib/registry.mjs";
 import { validate } from "../scripts/lib/validate.mjs";
-import { renderVercel, renderLanding, renderCategoryPage } from "../scripts/lib/render.mjs";
+import { renderVercel, renderLanding, renderCategoryPage, renderSitemapGateway } from "../scripts/lib/render.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ICON = "/static/img/apps/portfolio.svg";
+const OFF_SITE = "https://splitbill.ivanjairus.xyz/";
 
 function app(over = {}) {
   return {
@@ -24,6 +25,17 @@ function app(over = {}) {
 function registry(apps, meta = { portfolio: { title: "Portfolio", order: 10 } }) {
   return { site: { origin: "https://www.ivanjairus.xyz", title: "T" }, categoryMeta: meta, apps };
 }
+function externalApp(over = {}) {
+  return app({
+    slug: "splitbill",
+    origin: undefined,
+    external: OFF_SITE,
+    sitemap: false,
+    cards: [{ id: "splitbill", path: "", title: "Split Bill", summary: "s", category: "apps", icon: ICON, order: 10 }],
+    ...over,
+  });
+}
+const offSite = (over) => registry([externalApp(over)], { apps: { title: "Apps", order: 15 } });
 const ctxOf = (reg) => ({ root, registry: reg, base: { trailingSlash: true, observability: { csp: "x" }, headers: [], redirects: [] }, ...derive(reg) });
 
 test("a duplicate slug is rejected", () => {
@@ -114,4 +126,58 @@ test("a category page carries its own heading and canonical", () => {
   const html = renderCategoryPage(root, ctx, ctx.orderedCategories[0]);
   assert.match(html, /<h1 class="hero">Portfolio<\/h1>/);
   assert.match(html, /rel="canonical" href="https:\/\/www\.ivanjairus\.xyz\/categories\/portfolio\/"/);
+});
+
+test("an external app links its card off-domain and routes nothing", () => {
+  const ctx = ctxOf(offSite());
+  assert.deepEqual(validate(ctx), []);
+  assert.equal(ctx.cards[0].href, OFF_SITE);
+  assert.equal(ctx.routed.length, 0);
+  const vercel = JSON.parse(renderVercel(ctx));
+  assert.deepEqual(vercel.rewrites, []);
+  assert.deepEqual(vercel.redirects, []);
+});
+
+test("an external card names its own host instead of a gateway path", () => {
+  const html = renderLanding(root, ctxOf(offSite()));
+  assert.match(html, /<a class="tile" href="https:\/\/splitbill\.ivanjairus\.xyz\/">/);
+  assert.match(html, /<span class="path mono">splitbill\.ivanjairus\.xyz<\/span>/);
+  assert.ok(!html.includes("/splitbill/"), html);
+});
+
+test("an external app is live, publishes no sitemap and claims no gateway path", () => {
+  const bad = [
+    { status: "draft" },
+    { status: "hidden" },
+    { sitemap: true },
+    { origin: "https://ij-splitbill.vercel.app" },
+    { legacyRedirects: ["/bills/"] },
+  ];
+  for (const over of bad) {
+    const errs = validate(ctxOf(offSite(over)));
+    assert.ok(errs.length, `expected "${JSON.stringify(over)}" to be rejected`);
+  }
+});
+
+test("an external URL is a public https origin, not a vercel.app host or the gateway", () => {
+  const bad = [
+    "https://ij-splitbill.vercel.app/",
+    "https://www.ivanjairus.xyz/splitbill/",
+    "http://splitbill.ivanjairus.xyz/",
+    "https://splitbill.ivanjairus.xyz",
+    "https://splitbill.ivanjairus.xyz/?token=1",
+    "//splitbill.ivanjairus.xyz/",
+  ];
+  for (const external of bad) {
+    const errs = validate(ctxOf(offSite({ external })));
+    assert.ok(errs.some((e) => /external/.test(e)), `${external}: ${errs.join(" | ")}`);
+  }
+});
+
+test("the gateway sitemap lists neither an external app nor its path", () => {
+  const ctx = ctxOf(offSite());
+  const xml = renderSitemapGateway(ctx);
+  assert.ok(!xml.includes("/splitbill"), xml);
+  assert.ok(!xml.includes("splitbill.ivanjairus.xyz"), xml);
+  assert.match(xml, /categories\/apps\//);
 });

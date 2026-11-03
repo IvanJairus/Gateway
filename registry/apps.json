@@ -4,13 +4,17 @@
     "origin": "https://www.ivanjairus.xyz",
     "title": "Ivan Jairus",
     "monogram": "IJ",
-    "hero": "Two ways in.",
-    "sub": "One holds the work. The other holds the games."
+    "hero": "Three ways in.",
+    "sub": "One holds the work. One holds the games. One holds the bill."
   },
   "categoryMeta": {
     "portfolio": {
       "title": "Portfolio",
       "order": 10
+    },
+    "apps": {
+      "title": "Apps",
+      "order": 15
     },
     "games": {
       "title": "Games",
@@ -39,6 +43,24 @@
           "summary": "DevSecOps work: how the pipelines were designed, the decisions taken and what they cost, and what runs every week.",
           "category": "portfolio",
           "icon": "/static/img/apps/portfolio.svg",
+          "order": 10
+        }
+      ]
+    },
+    {
+      "slug": "splitbill",
+      "external": "https://splitbill.ivanjairus.xyz/",
+      "framework": "vite",
+      "status": "live",
+      "sitemap": false,
+      "cards": [
+        {
+          "id": "splitbill",
+          "path": "",
+          "title": "Split Bill",
+          "summary": "Split a real bill with a group: photograph a receipt or type the sentence, and tax, service and discount settle into the fewest transfers.",
+          "category": "apps",
+          "icon": "/static/img/apps/splitbill.svg",
           "order": 10
         }
       ]
